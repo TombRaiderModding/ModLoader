@@ -64,8 +64,8 @@ namespace modloader
 		GetFS = GetAddress<cdc::FileSystem*(*)()>(getFS.get_first());
 
 		// continue by finding pDiskFS, which we can also use to check which game we are in
-		auto& tr7Pattern = hook::pattern("E8 ? ? ? ? EB 02 33 C0 68 ? ? ? ? 8B C8 A3").count_hint(1);
-		auto& tr8Pattern = hook::pattern("89 35 ? ? ? ? 3B CE 5E 74 09 8B 01 8B 50 38 6A 01 FF D2 C3").count_hint(1);
+		auto tr7Pattern = hook::pattern("8B 15 ? ? ? ? 33 C9 89 4C 24 01").count_hint(1);
+		auto tr8Pattern = hook::pattern("89 35 ? ? ? ? 3B CE 5E 74 09 8B 01 8B 50 38 6A 01 FF D2 C3").count_hint(1);
 
 		if (tr7Pattern.empty() && tr8Pattern.empty())
 		{
@@ -86,7 +86,7 @@ namespace modloader
 	{
 		if (matches.empty()) return;
 
-		g_pDiskFS = *matches.get(0).get<cdc::FileSystem*>(-7);
+		g_pDiskFS = *matches.get(0).get<cdc::FileSystem*>(2);
 
 		// hook GetFS and make sure we override GetFS too
 		MH_CreateHook(GetFS, hookedGetFS, (void**)&GetFS);
