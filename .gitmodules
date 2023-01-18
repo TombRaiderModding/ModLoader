@@ -1,0 +1,6 @@
+[submodule "vendor/minhook"]
+	path = vendor/minhook
+	url = https://github.com/TsudaKageyu/minhook
+[submodule "vendor/patterns"]
+	path = vendor/patterns
+	url = https://github.com/ThirteenAG/Hooking.Patterns
