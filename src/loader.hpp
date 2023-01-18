@@ -7,13 +7,15 @@ namespace modloader
 	class Loader
 	{
 	private:
-		void InsertLegendHooks(hook::pattern matches);
-		void InsertUnderworldHooks(hook::pattern matches);
+		Loader() noexcept;
 
-		void ShowError();
+		void InsertLegendHooks(hook::pattern& matches) const noexcept;
+		void InsertUnderworldHooks(hook::pattern& matches) const noexcept;
+
+		void ShowError() const noexcept;
 
 		template<typename T>
-		T GetAddress(void* ptr);
+		T GetAddress(void* ptr) const noexcept;
 
 	public:
 		static Loader& GetInstance()
@@ -22,9 +24,8 @@ namespace modloader
 			return loader;
 		}
 
-		Loader();
-		~Loader();
+		~Loader() noexcept;
 
-		bool Initialize();
+		bool Initialize() const noexcept;
 	};
 }

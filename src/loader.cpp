@@ -39,17 +39,17 @@ bool hookedInitPatchArchive(const char* name)
 
 namespace modloader
 {
-	Loader::Loader()
+	Loader::Loader() noexcept
 	{
 		MH_Initialize();
 	}
 
-	Loader::~Loader()
+	Loader::~Loader() noexcept
 	{
 		MH_Uninitialize();
 	}
 
-	bool Loader::Initialize()
+	bool Loader::Initialize() const noexcept
 	{
 		auto getFS = hook::pattern("E8 ? ? ? ? 50 8D 4C 24 08 6A 00 51");
 
@@ -64,8 +64,8 @@ namespace modloader
 		GetFS = GetAddress<cdc::FileSystem*(*)()>(getFS.get_first());
 
 		// continue by finding pDiskFS, which we can also use to check which game we are in
-		auto tr7Pattern = hook::pattern("E8 ? ? ? ? EB 02 33 C0 68 ? ? ? ? 8B C8 A3").count_hint(1);
-		auto tr8Pattern = hook::pattern("89 35 ? ? ? ? 3B CE 5E 74 09 8B 01 8B 50 38 6A 01 FF D2 C3").count_hint(1);
+		auto& tr7Pattern = hook::pattern("E8 ? ? ? ? EB 02 33 C0 68 ? ? ? ? 8B C8 A3").count_hint(1);
+		auto& tr8Pattern = hook::pattern("89 35 ? ? ? ? 3B CE 5E 74 09 8B 01 8B 50 38 6A 01 FF D2 C3").count_hint(1);
 
 		if (tr7Pattern.empty() && tr8Pattern.empty())
 		{
@@ -82,7 +82,7 @@ namespace modloader
 		return true;
 	}
 
-	void Loader::InsertLegendHooks(hook::pattern matches)
+	void Loader::InsertLegendHooks(hook::pattern& matches) const noexcept
 	{
 		if (matches.empty()) return;
 
@@ -92,7 +92,7 @@ namespace modloader
 		MH_CreateHook(GetFS, hookedGetFS, (void**)&GetFS);
 	}
 
-	void Loader::InsertUnderworldHooks(hook::pattern matches)
+	void Loader::InsertUnderworldHooks(hook::pattern& matches) const noexcept
 	{
 		if (matches.empty()) return;
 
@@ -102,7 +102,7 @@ namespace modloader
 		MH_CreateHook(hook::get_pattern("56 57 E8 ? ? ? ? 8B 7C 24 0C"), hookedInitPatchArchive, (void**)&InitPatchArchive);
 	}
 
-	void Loader::ShowError()
+	void Loader::ShowError() const noexcept
 	{
 		MessageBoxA(nullptr,
 			"This version is not compatible, please open an issue on GitHub if this game is listed as supported.",
@@ -110,7 +110,7 @@ namespace modloader
 	}
 
 	template<typename T>
-	T Loader::GetAddress(void* ptr)
+	T Loader::GetAddress(void* ptr) const noexcept
 	{
 		return (T)((__int32)ptr + *(__int32*)((__int32)ptr + 1) + 5);
 	}
