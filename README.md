@@ -13,22 +13,29 @@ If you get an error message about your version not being compatible please open 
 
 ## Usage
 
-1. Head to the releases page and download the latest version
+1. Head to the [Releases](https://github.com/TombRaiderModding/ModLoader/releases) page and download the latest version
 2. Unzip all files in your game folder, overwriting any existing files.
+3. Drop any files or mods in the mods folder.
+
+## Mods folder
+
+The mods folder is located in the game directory, any file placed in this folder will be loaded instead of the file in the Bigfile.
+
+For files in the PC-W folder the PC-W prefix has been omitted, so pc-w\lara.drm will become mods\lara.drm. Other locations such as \trae\pc\objectlist.txt have been located in the mods folder.
+
+Localized files can be done by appending the specialization mask after the filename such as locals.bin_001 for English and locals.bin_002 for German. The highest bit like for Next Generation Content needs to be omitted.
 
 ## Build
 
-First clone the repository with submodules
+Install [premake5](https://premake.github.io/) and clone the repository. After invoke premake5 to create the solution files.
 
 ```bash
-git clone https://github.com/TombRaiderModding/ModLoader.git 
-git submodule init
-git submodule update
+git clone --recurse-submodules https://github.com/TombRaiderModding/ModLoader.git
+cd ModLoader
+premake5 vs2022
 ```
 
-Also make sure you have installed [premake5](https://premake.github.io/) on your system.
-
-Run `premake5 vs2022` in the cloned folder, now open the generated generated solution (.sln) and start building.
+Now open the generated generated solution (.sln) and start building.
 
 ## License
 
