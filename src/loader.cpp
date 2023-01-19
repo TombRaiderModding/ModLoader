@@ -41,7 +41,6 @@ namespace modloader
 {
 	Loader::Loader() noexcept
 	{
-		MH_Initialize();
 	}
 
 	Loader::~Loader() noexcept
