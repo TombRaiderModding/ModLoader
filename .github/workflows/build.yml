@@ -1,0 +1,34 @@
+name: Build
+
+# manually trigger
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    
+    - uses: microsoft/setup-msbuild@v1.1
+    - uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Download premake5
+      run: |
+        curl -o premake5.zip -L https://github.com/premake/premake-core/releases/download/v5.0.0-beta2/premake-5.0.0-beta2-windows.zip
+        tar -xf premake5.zip
+
+    - name: Generate project files
+      run: .\premake5 vs2022
+
+    - name: Build
+      run: MSBuild /p:Configuration=Release /p:Platform=Win32
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ModLoader
+        path: |
+          bin/Release/ModLoader.asi
+          bin/Release/ModLoader.pdb
