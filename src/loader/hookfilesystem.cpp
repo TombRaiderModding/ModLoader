@@ -131,4 +131,14 @@ namespace modloader
 	{
 		return m_pDiskFS->IsSuspended();
 	}
+
+	char* HookFileSystem::GetBufferPointer(void* request, unsigned int* bytesLocked)
+	{
+		return m_pDiskFS->GetBufferPointer(request, bytesLocked);
+	}
+
+	void HookFileSystem::ResetBufferPointer(int value)
+	{
+		return m_pDiskFS->ResetBufferPointer(value);
+	}
 }

@@ -17,19 +17,21 @@ namespace modloader
 	public:
 		MultiFileSystem(cdc::FileSystem* pFS, cdc::FileSystem* pHookFS);
 
-		virtual void* RequestRead(void* receiver, const char* fileName, unsigned int startOffset);
-		virtual void* OpenFile(char const* fileName);
-		virtual bool FileExists(char const* fileName);
-		virtual unsigned int GetFileSize(char const* fileName);
-		virtual void SetSpecialisationMask(unsigned int specMask);
-		virtual unsigned int GetSpecialisationMask();
-		virtual int GetStatus();
-		virtual void Update();
-		virtual void Synchronize();
+		void* RequestRead(void* receiver, const char* fileName, unsigned int startOffset);
+		void* OpenFile(char const* fileName);
+		bool FileExists(char const* fileName);
+		unsigned int GetFileSize(char const* fileName);
+		void SetSpecialisationMask(unsigned int specMask);
+		unsigned int GetSpecialisationMask();
+		int GetStatus();
+		void Update();
+		void Synchronize();
 
 		// unused since this filesystem will never run in TR8
-		virtual void Suspend() { }
-		virtual bool Resume() { return false; }
-		virtual bool IsSuspended() { return false; }
+		void Suspend() { }
+		bool Resume() { return false; }
+		bool IsSuspended() { return false; }
+		char* GetBufferPointer(void* request, unsigned int* bytesLocked) { return nullptr; }
+		void ResetBufferPointer(int value) { }
 	};
 }

@@ -17,18 +17,20 @@ namespace modloader
 	public:
 		HookFileSystem(cdc::FileSystem* pDiskFS);
 
-		virtual void* RequestRead(void* receiver, const char* fileName, unsigned int startOffset);
-		virtual void* OpenFile(char const* fileName);
-		virtual bool FileExists(char const* fileName);
-		virtual unsigned int GetFileSize(char const* fileName);
-		virtual void SetSpecialisationMask(unsigned int specMask);
-		virtual unsigned int GetSpecialisationMask();
-		virtual int GetStatus();
-		virtual void Update();
-		virtual void Synchronize();
+		void* RequestRead(void* receiver, const char* fileName, unsigned int startOffset);
+		void* OpenFile(char const* fileName);
+		bool FileExists(char const* fileName);
+		unsigned int GetFileSize(char const* fileName);
+		void SetSpecialisationMask(unsigned int specMask);
+		unsigned int GetSpecialisationMask();
+		int GetStatus();
+		void Update();
+		void Synchronize();
 
-		virtual void Suspend();
-		virtual bool Resume();
-		virtual bool IsSuspended();
+		void Suspend();
+		bool Resume();
+		bool IsSuspended();
+		char* GetBufferPointer(void* request, unsigned int* bytesLocked);
+		void ResetBufferPointer(int value);
 	};
 }
