@@ -9,10 +9,11 @@ project "ModLoader"
     language "C++"
     cppdialect "C++17"
 
-    -- Source file
+    -- Source files
     files "src/**"
+    includedirs { "src" }
 
-    -- Vendor modules
+    -- Vendor files
     files { "vendor/minhook/src/**", "vendor/patterns/*.cpp" }
     includedirs { "vendor/minhook/include", "vendor/patterns" }
 
