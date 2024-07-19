@@ -21,6 +21,15 @@ static cdc::FileSystem* GetFS() noexcept
 	return Hooking::CallReturn<cdc::FileSystem*>(s_getFS);
 }
 
+// Overrides the default file system used by the game
+static void SetFileSystem(cdc::FileSystem* multiFileSystem)
+{
+	// A1 8C 88 83 00	mov eax, g_pFS
+	auto fileSystem = *(cdc::FileSystem***)((char*)s_getFS + 1);
+
+	*fileSystem = multiFileSystem;
+}
+
 // Insert the hook file system and remove the current hook
 template<typename FileSystem>
 static void InsertAndUnhook() noexcept
@@ -29,9 +38,10 @@ static void InsertAndUnhook() noexcept
 	{
 		// Create new multi file system if it doesn't exist in current game
 		auto multiFileSystem = new MultiFileSystem();
+		multiFileSystem->Add(GetFS());
 
 		// Override the default file system with ours
-		*(cdc::FileSystem**)((char*)s_getFS + 1) = multiFileSystem;
+		SetFileSystem(multiFileSystem);
 	}
 
 	// Create the hook file system

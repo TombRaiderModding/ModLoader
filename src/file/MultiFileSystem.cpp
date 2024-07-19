@@ -8,7 +8,7 @@ MultiFileSystem::MultiFileSystem() : m_fileSystems()
 
 void MultiFileSystem::Add(cdc::FileSystem* fileSystem, ...)
 {
-	m_fileSystems.push_back(fileSystem);
+	m_fileSystems.insert(m_fileSystems.begin(), fileSystem);
 }
 
 cdc::FileSystem* MultiFileSystem::GetBestFileSystem(const char* fileName)
