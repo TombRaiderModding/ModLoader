@@ -15,7 +15,7 @@ HookFileSystem::HookFileSystem(cdc::FileSystem* diskFileSystem) : m_path()
 	m_language = 1;
 }
 
-bool HookFileSystem::FindFile(const char* fileName, char* outPath)
+bool HookFileSystem::FindFile(const char* fileName, char* outPath) noexcept
 {
 	strcpy_s(outPath, _MAX_PATH, fileName);
 

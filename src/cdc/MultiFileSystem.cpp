@@ -4,7 +4,7 @@
 
 #include <Hooking.Patterns.h>
 
-void cdc::MultiFileSystem::Add(FileSystem* fileSystem, bool bReprioritize, bool bAddToFront)
+void cdc::MultiFileSystem::Add(FileSystem* fileSystem, bool bReprioritize, bool bAddToFront) const noexcept
 {
 	auto func = hook::get_pattern<void>("80 7C 24 0C 00 8B C1 74 5A 53");
 

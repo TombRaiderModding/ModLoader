@@ -8,13 +8,13 @@ class MultiFileSystem : public cdc::FileSystem
 private:
 	std::vector<cdc::FileSystem*> m_fileSystems;
 
-	cdc::FileSystem* GetBestFileSystem(const char* fileName);
+	cdc::FileSystem* GetBestFileSystem(const char* fileName) const noexcept;
 
 public:
 	MultiFileSystem();
 
 	// ... to be compatible with function definition of base game
-	void Add(cdc::FileSystem* fileSystem, ...);
+	void Add(cdc::FileSystem* fileSystem, ...) noexcept;
 
 	cdc::FileRequest* RequestRead(cdc::FileReceiver* receiver, const char* fileName, unsigned int startOffset);
 	cdc::File* OpenFile(const char* fileName);

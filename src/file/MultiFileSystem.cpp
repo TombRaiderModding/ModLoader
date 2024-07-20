@@ -6,12 +6,12 @@ MultiFileSystem::MultiFileSystem() : m_fileSystems()
 {
 }
 
-void MultiFileSystem::Add(cdc::FileSystem* fileSystem, ...)
+void MultiFileSystem::Add(cdc::FileSystem* fileSystem, ...) noexcept
 {
 	m_fileSystems.insert(m_fileSystems.begin(), fileSystem);
 }
 
-cdc::FileSystem* MultiFileSystem::GetBestFileSystem(const char* fileName)
+cdc::FileSystem* MultiFileSystem::GetBestFileSystem(const char* fileName) const noexcept
 {
 	for (auto fileSystem : m_fileSystems)
 	{

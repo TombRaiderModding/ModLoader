@@ -7,6 +7,6 @@ namespace cdc
 	class MultiFileSystem
 	{
 	public:
-		void Add(FileSystem* fileSystem, bool bReprioritize, bool bAddToFront);
+		void Add(FileSystem* fileSystem, bool bReprioritize, bool bAddToFront) const noexcept;
 	};
 }

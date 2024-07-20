@@ -22,7 +22,7 @@ static cdc::FileSystem* GetFS() noexcept
 }
 
 // Patch the virtual function table in Legend to switch the newly added methods with the destructor
-static void PatchVFTable(cdc::FileSystem* fileSystem)
+static void PatchVFTable(cdc::FileSystem* fileSystem) noexcept
 {
 	auto raw = (VirtualClass*)fileSystem;
 
@@ -36,7 +36,7 @@ static void PatchVFTable(cdc::FileSystem* fileSystem)
 }
 
 // Overrides the default file system used by the game
-static void SetFileSystem(cdc::FileSystem* multiFileSystem)
+static void SetFileSystem(cdc::FileSystem* multiFileSystem) noexcept
 {
 	// A1 8C 88 83 00	mov eax, g_pFS
 	auto fileSystem = *(cdc::FileSystem***)((char*)s_getFS + 1);

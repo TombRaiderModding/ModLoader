@@ -13,7 +13,7 @@ private:
 
 	char m_path[_MAX_PATH];
 
-	bool FindFile(const char* fileName, char* outPath);
+	bool FindFile(const char* fileName, char* outPath) noexcept;
 
 public:
 	HookFileSystem(cdc::FileSystem* diskFileSystem);
