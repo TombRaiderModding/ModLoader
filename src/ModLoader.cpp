@@ -184,7 +184,7 @@ void ModLoader::ShowError() const noexcept
 	MessageBoxA(
 		NULL,
 		"This version is not compatible, please open an issue on GitHub if this game is listed as supported.",
-		"Gane not compatible",
+		"Game not compatible",
 		MB_OK | MB_ICONERROR);
 }
 
