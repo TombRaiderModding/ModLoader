@@ -16,3 +16,8 @@ public:
 	void Initialize() noexcept;
 	bool IsInitialized() const noexcept;
 };
+
+struct VirtualClass
+{
+	void** vftable;
+};

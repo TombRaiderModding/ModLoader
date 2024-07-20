@@ -21,6 +21,20 @@ static cdc::FileSystem* GetFS() noexcept
 	return Hooking::CallReturn<cdc::FileSystem*>(s_getFS);
 }
 
+// Patch the virtual function table in Legend to switch the newly added methods with the destructor
+static void PatchVFTable(cdc::FileSystem* fileSystem)
+{
+	auto raw = (VirtualClass*)fileSystem;
+
+	DWORD oldProtect;
+	VirtualProtect(raw->vftable, 15 * sizeof(void*), PAGE_READWRITE, &oldProtect);
+
+	// Swap 'Suspend' for '~FileSystem'
+	raw->vftable[9] = raw->vftable[14];
+
+	VirtualProtect(raw->vftable, 15 * sizeof(void*), oldProtect, &oldProtect);
+}
+
 // Overrides the default file system used by the game
 static void SetFileSystem(cdc::FileSystem* multiFileSystem)
 {
@@ -39,6 +53,8 @@ static void InsertAndUnhook() noexcept
 		// Create new multi file system if it doesn't exist in current game
 		auto multiFileSystem = new MultiFileSystem();
 		multiFileSystem->Add(GetFS());
+
+		PatchVFTable(multiFileSystem);
 
 		// Override the default file system with ours
 		SetFileSystem(multiFileSystem);
