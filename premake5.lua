@@ -19,6 +19,9 @@ project "ModLoader"
 
     symbols "On"
 
+    -- Windows XP support
+    buildoptions { "/Zc:threadSafeInit-" }
+
     filter "configurations:Debug"
         defines { "DEBUG", "_DEBUG" }
 
